@@ -18,6 +18,8 @@ The use of cryptographic secure passwords to protect smart contract function exe
 
 ### Consumable SDK
 
+https://www.npmjs.com/package/consumable-sdk
+
 The **Consumable SDK** is an open-source toolkit that can be installed via npm. It provides utilities to generate and manage secrets for Consumable-compatible smart contracts.
 
 **Installation:**
