@@ -14,49 +14,6 @@ The use of cryptographic secure passwords to protect smart contract function exe
 - Distributing vouchers for one-time payments.
 - Enabling anonymous voting mechanisms by delivering one-time voting vouchers.
 
-## The Consumable Standard
-
-A typical transaction consists of the sender, parameters, and transaction configuration (e.g., gas settings). However, sending secrets or even their hashes directly as parameters is vulnerable to front-running on a public mempool.
-
-### Solution
-
-To address this, our solution generates secrets as funded and ready-to-use private keys. These secrets are encoded in base64, and the structure includes:
-- **First 20 bytes:** The secret itself.
-- **Followed by:** Chain ID, Contract Address, Function Signature, and Merkle Proof.
-
-### Example
-
-**Encoded:**
-```
-eyJwcml2YXRlS2V5IjoiMH2YXRlS2V51…
-```
-
-**Decoded:**
-```json
-{
-    "privateKey": "0xb29893e4eb890469cbec39e2e5c2c21dd69c1bb1531898f4d6e8647fb9e015d2",
-    "chainId": 1,
-    "contractAddress": "0x01",
-    "methodName": "exchangeVoucher",
-    "methodArgs": [
-        {
-            "name": "merkleProof",
-            "type": "bytes32[]"
-        },
-        {
-            "name": "receiver",
-            "type": "address"
-        }
-    ],
-    "merkleProof": [
-        "0xdd4c045b7c151349b25761a8c9e1fe9afba612f1f3e2378c3a8aae14cb7cb999",
-        "0x26e9aa225cf060397da6327643370fd03919b3069fe3823394b0bcc7bc077f25"
-    ]
-}
-```
-
-The private keys are efficiently compressed into the Consumable contracts via Merkle Trees and verified at the time of consumption using OpenZeppelin's MerkleProof.
-
 ## Main Components
 
 ### Consumable SDK
@@ -134,6 +91,51 @@ abstract contract Consumable {
    }
 }
 ```
+
+## Secret Structure and Workflow
+
+A typical transaction consists of the sender, parameters, and transaction configuration (e.g., gas settings). However, sending secrets or even their hashes directly as parameters is vulnerable to front-running on a public mempool.
+
+### Solution
+
+To address this, our solution generates secrets as funded and ready-to-use private keys. In addition, to facilitate use, we include "Secrets Metadata", which includes useful data such as the contract address and function to be called, so any frontend can execute and consume in one click.
+
+- **First 20 bytes:** The secret itself.
+- **Followed by Secret Metadata:** Chain ID, Contract Address, Function Signature, and Merkle Proof.
+
+### Example
+
+**Encoded:**
+```
+eyJwcml2YXRlS2V5IjoiMH2YXRlS2V51…
+```
+
+**Decoded:**
+```json
+{
+    "privateKey": "0xb29893e4eb890469cbec39e2e5c2c21dd69c1bb1531898f4d6e8647fb9e015d2",
+    "chainId": 1,
+    "contractAddress": "0x01",
+    "methodName": "exchangeVoucher",
+    "methodArgs": [
+        {
+            "name": "merkleProof",
+            "type": "bytes32[]"
+        },
+        {
+            "name": "receiver",
+            "type": "address"
+        }
+    ],
+    "merkleProof": [
+        "0xdd4c045b7c151349b25761a8c9e1fe9afba612f1f3e2378c3a8aae14cb7cb999",
+        "0x26e9aa225cf060397da6327643370fd03919b3069fe3823394b0bcc7bc077f25"
+    ]
+}
+```
+
+The private keys are efficiently compressed into the Consumable contracts via Merkle Trees and verified at the time of consumption using OpenZeppelin's MerkleProof.
+In addition, we generate this encoded secrets including the metadata of the secret
 
 ## Use-Case Example: Consumable Vault
 
