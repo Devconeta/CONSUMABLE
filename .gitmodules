@@ -1,0 +1,9 @@
+[submodule "sdk"]
+	path = sdk
+	url = https://github.com/Devconeta/CONSUMABLE-sdk
+[submodule "contracts"]
+	path = contracts
+	url = https://github.com/Devconeta/CONSUMABLE-contracts
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/Devconeta/CONSUMABLE-frontend
