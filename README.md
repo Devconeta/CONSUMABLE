@@ -199,10 +199,9 @@ Here are a few ideas for projects that can be built on top of Consumable:
 
 ## Proof of Concept
 
+- [Website URL](https://consumable-poc-etharg.vercel.app/consume)
 
 ## Related Repositories
-
-- [Website URL](https://consumable-poc-etharg.vercel.app/consume)
 
 - [Consumable SDK](https://github.com/Devconeta/CONSUMABLE-sdk)
 - [Consumable Contracts](https://github.com/Devconeta/CONSUMABLE-contracts)
