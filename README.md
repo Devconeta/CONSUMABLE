@@ -197,8 +197,12 @@ Here are a few ideas for projects that can be built on top of Consumable:
 
 - **Anonymous Voting:** Facilitate anonymous voting on-chain by issuing unique voting tokens or permissions via secrets, ensuring that each participant can vote only once without revealing their identity.
 
+## Proof of Concept
+
 
 ## Related Repositories
+
+- [Website URL[(https://consumable-poc-etharg.vercel.app/consume)
 
 - [Consumable SDK](https://github.com/Devconeta/CONSUMABLE-sdk)
 - [Consumable Contracts](https://github.com/Devconeta/CONSUMABLE-contracts)
