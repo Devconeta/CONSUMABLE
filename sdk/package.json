@@ -1,0 +1,50 @@
+{
+  "devDependencies": {
+    "@babel/cli": "^7.24.8",
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@eslint/js": "^9.8.0",
+    "@types/node": "^22.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.8.0",
+    "nodemon": "^3.1.4",
+    "prettier": "^3.3.3",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.5.4"
+  },
+  "name": "consumable-sdk",
+  "version": "1.1.1",
+  "main": "dist/src/index.js",
+  "module": "dist/src/index.esm.js",
+  "types": "dist/src/index.d.ts",
+  "browser": "dist/src/index.browser.js",
+  "scripts": {
+    "build": "tsc && tsc -p tsconfig.esm.json && tsc -p tsconfig.browser.json",
+    "start": "ts-node bin/cli.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
+    "prettier:fix": "prettier --write src",
+    "npm:deploy": "npm run build && npm publish"
+  },
+  "bin": {
+    "consumable-sdk": "./dist/bin/cli.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "Sdk to create consumable's contracts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Devconeta/CONSUMABLE-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Devconeta/CONSUMABLE-sdk/issues"
+  },
+  "homepage": "https://github.com/Devconeta/CONSUMABLE-sdk#readme",
+  "dependencies": {
+    "@openzeppelin/merkle-tree": "^1.0.7",
+    "commander": "^12.1.0",
+    "ethers": "^6.13.2"
+  }
+}

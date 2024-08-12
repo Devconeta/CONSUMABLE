@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  color: whitesmoke;
+}
+
+@layer base {
+}
+
+@layer utilities {
+  .animated-underline {
+    @apply relative inline-block cursor-pointer;
+    @apply after:content-[''] after:absolute after:w-full after:h-0.5 
+           after:bg-white after:bottom-0 after:left-0
+           after:scale-x-0 after:origin-bottom-left
+           after:transition-transform after:duration-300 after:ease-in-out;
+  }
+  .animated-underline:hover {
+    @apply after:scale-x-100;
+  }
+
+  .input-outline {
+    @apply focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition duration-300 ease-in-out;
+  }
+
+  .translate-up {
+    @apply transition-all duration-150 hover:-translate-y-[5px];
+  }
+
+  .disabled-button {
+    @apply disabled:transition-none disabled:transform-none disabled:cursor-not-allowed;
+  }
+}
