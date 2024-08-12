@@ -14,7 +14,7 @@
     "typescript": "^5.5.4"
   },
   "name": "consumable-sdk",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "main": "dist/src/index.js",
   "module": "dist/src/index.esm.js",
   "types": "dist/src/index.d.ts",
@@ -36,12 +36,12 @@
   "description": "Sdk to create consumable's contracts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Devconeta/CONSUMABLE-sdk.git"
+    "url": "git+https://github.com/Devconeta/CONSUMABLE.git"
   },
   "bugs": {
-    "url": "https://github.com/Devconeta/CONSUMABLE-sdk/issues"
+    "url": "https://github.com/Devconeta/CONSUMABLE/issues"
   },
-  "homepage": "https://github.com/Devconeta/CONSUMABLE-sdk#readme",
+  "homepage": "https://github.com/Devconeta/CONSUMABLE#readme",
   "dependencies": {
     "@openzeppelin/merkle-tree": "^1.0.7",
     "commander": "^12.1.0",
