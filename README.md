@@ -5,12 +5,11 @@ Consumables are a new way to interact with Smart Contracts, unlocking secure and
  _Winner of General track at Ethereum Argentina LevelUp Hackathon 2024_ :trophy: &nbsp; 
 
 
-### The Ethereum Argentina Level Funding Round for building is here
+### The Ethereum Argentina Level Funding Round is here
 
-**_Votes are being received now:_** https://www.drips.network/app/drip-lists/0270e337-047d-46a0-a55a-99d6030c285e &nbsp;
+If you believe Consumable provides enough value to the community as open-source infrastructure, please consider voting for us to continue building and improving it! We are fully commited to use any funding for technical development, making Consumable a production-ready tool for any project. Check our roadmap below!
 
-If you believe Consumable provides enough value to the community as open-source infraestructure, please consider voting us to continue building and improving it!. We are fully commited to use any funding as development making Consumable a production-ready tool for any project. Check our roadmap below!
-
+Votes are being received now: https://www.drips.network/app/drip-lists/0270e337-047d-46a0-a55a-99d6030c285e &nbsp;
 
 
 ## Motivation
