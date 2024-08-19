@@ -293,10 +293,8 @@ Esteban Viera
 Alexis Wolfsdorf
 [Linkedin](https://www.linkedin.com/in/alexis-wolfsdorf-291379b4/)
 
-### acknowledgments
-We want to acknowledge Ernesto Garcia (@ernestognw) for inspiring this project and for the brainstorming sessions a year ago, which helped shape the concept of on-chain secrets that led to Consumable.
-
-
+### Acknowledgments
+We want to acknowledge Ernesto Garcia (@ernestognw) for inspiring this project and for the brainstorming sessions a year ago, which helped shape the concept of on-chain secrets that led to Consumable. Many thanks!
 
 
 
