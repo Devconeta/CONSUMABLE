@@ -1,7 +1,16 @@
 # Consumable
 
+Consumables are a new way to interact with Smart Contracts, unlocking secure and front-running-resistant secrets that can be consumed/exchanged against Smart Contracts as authentication, in a safe and privacy-enhancing manner.
 
-Consumables are a new way to interact with Smart Contracts, secure and front-running-resistant secrets that can be consumed/exchanged against Smart Contracts for execution, in a safe and privacy-enhancing manner.
+ _Winner of General track at Ethereum Argentina LevelUp Hackathon 2024_ :trophy: &nbsp; 
+
+
+### The Ethereum Argentina Level Funding Round for building is here
+
+**_Votes are being received now:_** https://www.drips.network/app/drip-lists/0270e337-047d-46a0-a55a-99d6030c285e &nbsp;
+
+If you believe Consumable provides enough value to the community as open-source infraestructure, please consider voting us to continue building and improving it!. We are fully commited to use any funding as development making Consumable a production-ready tool for any project. Check our roadmap below!
+
 
 
 ## Motivation
@@ -10,13 +19,15 @@ Guarding smart contract functions with cryptographic secrets unlocks many differ
 
 Consumables truly bright every time you need to authorize a user or group of users to execute without needing to know their address beforehand.
 
+**Usecase examples:**
 
-- Generating decentralized claiming secrets for your NFT collection.
-- Generating gift-cards that don't need a centralized backend authorizing their consumption/exchange.
+- Generate claiming secrets for your NFT collection without needing a centralized backend authorization. (Deliver them as links, QR's, NFC, email, or any form that suits your project!).
 - Authorization for one-time payments/withdrawals.
+- Create descentralized gift-cards.
 - Anonymous voting, using secrets as voting vouchers.
+- Deliver a secret to a user whose address is unknown, in order to authorize him to execute any function.
 
-You can deliver optionally pre-funded secrets or "execution rights" to your users, digitally or physically, and they can consume them in one click on a facilitator interface to execute the underlying authorized function.
+Using our Open Source SDK, you can even pre-fund your secrets with gas and deliver digitally or physically, making "consumption" very accessible for Web3 Onboarding and unenxperienced users. Consumable secrets can be exchanged in just one click on a facilitator interface (white-labeled) to execute the underlying authorized function.
 
 
 &nbsp;
@@ -26,13 +37,13 @@ You can deliver optionally pre-funded secrets or "execution rights" to your user
 
 Think of Consumables as one-time granular permissions for executing on-chain actions. 
 
-To achieve privacy and front-running resistance on any public-storage and public-mempool blockchain, instead of sending cryptographic derivates of the secret such as hashes, encryptions, or even zero-knowledge proofs, which are still front-runneable, we are proposing a workaround to implement secrets on the "sender" part of the transaction instead of the "parameters".
+To achieve privacy and front-running resistance on any public-storage and public-mempool blockchain, instead of sending any cryptographic derivate of the secret-key such as hashes, encryptions, or even zero-knowledge proof as parameters (which are still front-runneable) we propose a workaround to implement secrets on the "sender" section of the transaction, facilitating one-time (or N-times) authentication. 
 
 For our implementation, we provide:
-- An open-source SDK for secure secret generation on your end.
-- A standard "Consumable" contract for guarding functions with secrets inspired by OpenZeppelin's Ownable.
-- A proposed structure for base64 encoded secrets that strongly facilitates consumption.
-- An optional frontend that facilitates execution (and soon generation for non-technicals), but you can implement your consuming interface that better fits your use-case. (Even into your product?)
+- An open-source SDK for secure secret generation on *your* end.
+- A "Consumable" standard contract for guarding functions with secrets highly inspired by OpenZeppelin's "Ownable". (Think of onlyConsumer as you think of onlyOwner).
+- A proposed structure for base64 encoded secrets that strongly facilitates consumption. Those include domain information (where to exchange the secrets?) and the merkle-proof (needed authentication verification), so any frontend or electronic device with internet can interpretate and execute Consumables.
+- An optional frontend that facilitates execution (and soon generation for non-technicals), but you can implement your consuming interface that better fits your use-case. (Even fit it into your product flow?)
 
 
 &nbsp;
@@ -132,16 +143,16 @@ abstract contract Consumable {
 
 ## Consumable Structure Proposal and Workflow
 
-To facilitate consumption and onboarding for web2 users, we propose a standard structure of {secret + domainInfo + merkleProof} which is then encoded into base64 and delivered in the form of links, QR codes, or NFC tags.
+To facilitate consumption, interoperability and onboarding for web2 users, we propose a standard structure of {secret + domainInfo + merkleProof} which is then encoded and decoded in base64 and delivered in the form of links, QR codes, or NFC tags.
 
-This way, any frontend interface or electronic device with internet access can decode the consumables and execute the transaction, knowing exactly where, how, and which parameters to input. To facilitate execution even more, we are also encoding the Merkle Proof into the base64 consumable structure.
+This way, any frontend interface or electronic device with internet access can decode the consumables and execute the transactions, knowing exactly where, how, and which parameters to input or ask the final user for. To facilitate execution even more, we are also encoding the Merkle Proof into the base64 consumable structure, so no extra steps are needed!. *Onboard your users in one click.*
 
 
-### Proposed structure
+### Proposed structure of a consumable.
 
-- **First bytes:** The secret itself.
-- **Secret Metadata/Domain Info:** Chain ID, Contract Address, Function Signature, and Merkle Proof.
-- **Merkle Proof:** The Merkle proof of your secret to be verified on the Smart Contract.
+- **First bytes:** The secret.
+- **Secret Metadata/Domain Info:** Chain ID, Contract Address and Function Signature.
+- **Merkle Proof:** The Merkle proof of your secret to be verified by the Smart Contract.
 
 ### Example
 
@@ -176,7 +187,7 @@ eyJwcml2YXRlS2V5IjoiMH2YoiMH2XRlS2V51…
 }
 ```
 
-The public part of the secrets is super-efficiently compressed into the Consumable contracts via Merkle Trees and verified at the consumption execution using OpenZeppelin's MerkleProof library.\
+The public part of the secrets is then efficiently compressed into the Consumable interfaced contracts using Merkle-Trees and verified during execution.
 
 
 &nbsp;
@@ -247,10 +258,10 @@ Here are a few ideas for projects that can be built on top of Consumable:
 
 ## Roadmap
 
-- Enhance frontend to enable non-technicals to generate secrets directly on the browser client, getting links/QR's to distribute digitally or physically.
-- Develop Contract extensions for the main Consumable contract to support more use cases.
-- Create complete examples of implementations and full documentation.
-- If the project gets enough traction, formalize an EIP for the standardization and adoption of consumables.
+- Enhance frontend to enable non-technicals to generate secrets directly on the browser client, optionally obtaining the secrets as links, QR's, or even NFT-compatible instructions to distribute digitally or physically.
+- Develop a set of Contract extensions for the main Consumable contract to support more use cases, making it easier to interegrate it into your product needs.
+- Create full documentation and use cases examples.
+- If the project gets enough traction, formalize an EIP for the standardization and further adoption of consumables. We belive that if we all generate the same structure of secrets, any frontend can interprate and execute secrets for any chain, contract and function with ease, enhancing interoperability and compatibility.
 
 
 
@@ -261,11 +272,26 @@ Here are a few ideas for projects that can be built on top of Consumable:
 
 - [Website URL](https://consumable-poc-etharg.vercel.app/consume)
 
-## Related Repositories
+## Related Repositories and links
 
 - [Consumable SDK](https://github.com/Devconeta/CONSUMABLE-sdk)
 - [Consumable Contracts](https://github.com/Devconeta/CONSUMABLE-contracts)
 - [Consumable Frontend](https://github.com/Devconeta/CONSUMABLE-frontend)
+
+- [Taikai participation](https://taikai.network/ethargentina/hackathons/level-up-argentina-2024/projects/clz1qah2a03p9wx01zwyvl15y)
+
+## Meet the team
+
+Gonzalo Othacehe
+
+Ignacio Presas
+
+Esteban Viera
+
+Alexis Wolfsdorf
+x.com/gonzaotc
+x.com/@nv-cho
+x.com/@estok_eth
 
 ## License
 
