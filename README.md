@@ -281,16 +281,24 @@ Here are a few ideas for projects that can be built on top of Consumable:
 
 ## Meet the team
 
-Gonzalo Othacehe
+Gonzalo Othacehe ~gonzaotc
+[Twitter](https://x.com/gonzaotc) [Linkedin](https://www.linkedin.com/in/gonzaotc/)
 
-Ignacio Presas
+Ignacio Presas ~nvcho
+[Twitter](https://x.com/@nv_cho) [Linkedin](https://www.linkedin.com/in/igpresas/)
 
 Esteban Viera
+[Twitter](https://x.com/@estok_eth) [Linkedin](https://www.linkedin.com/in/esteban-viera/)
 
 Alexis Wolfsdorf
-x.com/gonzaotc
-x.com/@nv-cho
-x.com/@estok_eth
+[Linkedin](https://www.linkedin.com/in/alexis-wolfsdorf-291379b4/)
+
+### acknowledgments
+We want to acknowledge Ernesto Garcia (@ernestognw) for inspiring this project and for the brainstorming sessions a year ago, which helped shape the concept of on-chain secrets that led to Consumable.
+
+
+
+
 
 ## License
 
