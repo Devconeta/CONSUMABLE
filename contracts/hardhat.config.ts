@@ -19,6 +19,9 @@ const baseConfig: HardhatUserConfig = {
     receiver: {
       default: 1,
     },
+    consumer: {
+      default: 3,
+    },
     zeroAddress: {
       default: "0x0000000000000000000000000000000000000000",
     },

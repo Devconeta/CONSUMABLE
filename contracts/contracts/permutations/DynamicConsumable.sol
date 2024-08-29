@@ -6,8 +6,8 @@ pragma solidity 0.8.26;
 ///    @title CONSUMABLE Secrets                                                    :%=     .=%:                        
 ///    @notice Secure, one-time granular access control for on-chain actions          =@.  .@+                          
 ///    @notice Generate and deliver front-running resistant secrets               .:::+@.  .@*:::.                      
-///    @notice This version implements a Merkletree for Static Generation       =+--:::    ---::+=                     
-///    @author @gonzaotc, @nv-cho, @estok_eth, @AlexisWolfs                    =%: ..      ....   :%=                   
+///    @notice This version implements a mapping for Dynamic Generation          =+--:::    ---::+=                     
+///    @author @gonzaotc, @nv-cho, @estok_eth, @AlexisWolfs                     =%: ..      ....   :%=                   
 ///    @custom:repository https://github.com/Devconeta/CONSUMABLE            :@=  ...:  .:::::::..  =@:                 
 ///    @custom:security-contact gonza.otc@gmail.com                         :@= .::::   .:::::::::.. =@:                 
 ///    @custom:version 0.1.0                                                :@= :===-   :=======+++= =@:                    
@@ -16,51 +16,52 @@ pragma solidity 0.8.26;
 ///                                                                               +*==--===--=*+                     
 //
 
-import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts/utils/Multicall.sol";
 
-/// @title Consumable
-/// @notice Abstract contract for managing consumable resources with Merkle tree-based access control.
-/// @dev This contract should be inherited by other contracts that implement specific consumer validation logic.
-abstract contract Consumable {
-    /// @notice The Merkle root used to verify consumer eligibility.
-    bytes32 public merkleRoot;
+/// @title DynamicConsumable
+/// @notice Contract for managing dynamic, mapping-based access control to consumable resources.
+/// @dev This contract uses AccessControl for role-based permissions and maintains a mapping for tracking valid consumers.
+/// @dev The Multicall utility is included to allow batching multiple consumer additions into a single transaction.
+contract DynamicConsumable is AccessControl, Multicall {
+    /// @notice Role identifier for the entity that can add new consumers.
+    bytes32 public constant GENERATOR_ROLE = keccak256("GENERATOR_ROLE");
 
     /// @notice The maximum number of uses allowed per consumer.
     uint256 public totalUsesPerConsumer;
 
+    /// @notice A mapping to store valid consumers.
+    mapping(address => bool) public consumers;
+
     /// @notice A mapping to track the number of times each address has consumed the resource.
     mapping(address => uint256) public consumptions;
 
-    /// @notice Initializes the contract with a Merkle root and a limit on uses per consumer.
-    /// @param _merkleRoot The Merkle root for consumer verification.
+    /// @notice Initializes the contract with a limit on uses per consumer and grants the deployer the GENERATOR_ROLE.
     /// @param _totalUsesPerConsumer The maximum number of uses allowed per consumer.
-    constructor(bytes32 _merkleRoot, uint256 _totalUsesPerConsumer) {
-        merkleRoot = _merkleRoot;
+    constructor(uint256 _totalUsesPerConsumer) {
+        _grantRole(GENERATOR_ROLE, msg.sender);
         totalUsesPerConsumer = _totalUsesPerConsumer;
     }
 
-    /// @notice Modifier to restrict access to valid consumers based on a Merkle proof.
-    /// @param _merkleProof The Merkle proof provided by the caller to validate their eligibility.
-    modifier onlyConsumer(bytes32[] calldata _merkleProof) {
-        _checkConsumer(_merkleProof);
+    /// @notice Modifier to restrict access to valid consumers.
+    /// @dev Calls the internal _checkConsumer function to validate the consumer.
+    modifier onlyConsumer() {
+        _checkConsumer();
         _;
     }
 
     /// @notice Internal function to validate the consumer and increment their consumption count.
-    /// @param _merkleProof The Merkle proof provided by the caller.
-    /// @dev This function can be overridden by derived contracts to customize consumer validation.
-    function _checkConsumer(bytes32[] calldata _merkleProof) internal virtual {
-        require(isValidConsumer(_merkleProof), "!Consumer");
+    /// @dev This function checks if the caller is a valid consumer and has not exceeded their allowed uses.
+    function _checkConsumer() internal virtual {
+        require(isValidConsumer(), "!Consumer");
         require(consumerHasNotExceededTotalUses(), "!Uses");
         _incrementConsumerConsumptions();
     }
 
-    /// @notice Verifies if the caller is a valid consumer using a Merkle proof.
-    /// @param _merkleProof The Merkle proof provided by the caller.
+    /// @notice Verifies if the caller is a valid consumer.
     /// @return bool True if the caller is a valid consumer, false otherwise.
-    function isValidConsumer(bytes32[] calldata _merkleProof) public view virtual returns (bool) {
-        bytes32 leaf = keccak256(bytes.concat(keccak256(abi.encode(msg.sender))));
-        return MerkleProof.verify(_merkleProof, merkleRoot, leaf);
+    function isValidConsumer() public view virtual returns (bool) {
+        return consumers[msg.sender];
     }
 
     /// @notice Checks if the caller has not exceeded their allowed number of uses.
@@ -74,4 +75,15 @@ abstract contract Consumable {
     function _incrementConsumerConsumptions() internal {
         consumptions[msg.sender]++;
     }
+
+    /// @notice Adds a new consumer to the list of valid consumers.
+    /// @param _consumer The address of the consumer to be added.
+    /// @dev This function can only be called by an account with the GENERATOR_ROLE.
+    function _addConsumer(address _consumer) public onlyRole(GENERATOR_ROLE) {
+        consumers[_consumer] = true;
+    }
+
+    /// @notice Batches multiple consumer additions into a single transaction.
+    /// @dev The Multicall utility allows the generator to add multiple consumers at once, reducing gas costs and improving efficiency.
+    /// @dev Example usage: multicall([addConsumer1, addConsumer2, ...]).
 }
